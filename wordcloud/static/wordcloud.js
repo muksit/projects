@@ -5,13 +5,14 @@ var fill = d3.scale.category20c();
 
 var phrases = "very, so, not"
 
-request = $.get("/ask", {word: "gaza"}, function(data){
+request = $.get("/ask", {word: "josh"}, function(data){
     var sampletext = data;
+
     var splittext = sampletext.split(" ");
 
     d3.layout.cloud().size([2000, 2000])
         .words(splittext.map(function(d) {
-        return {text: d, size: 5 * (getFrequency(sampletext)[d])+5 };
+        return {text: d, size: 15 * (getFrequency(sampletext)[d])+5 };
         }))
         .rotate(function() { return ~~(Math.random() * 2) * 90; })
         .font("Impact")

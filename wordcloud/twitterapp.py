@@ -22,12 +22,11 @@ splitblacklist = blacklist.split()
 api = TwitterAPI(key, secret, token, token_secret)
 
 
-r = api.request('search/tweets', {'q':'gaza', 'lang': 'en', 'count': 100})
+
 # for item in r.get_iterator():
-textarray = []
-for item in r:
-    
-    textarray.append(item['text'])
+# textarray = []
+# for item in r:  
+#     textarray.append(item['text'])
 
 
 
@@ -40,9 +39,9 @@ def input():
 @app.route('/ask')
 def givecloud():
     wordtograph = request.args.get('word')
-    print wordtograph
-    words = ', '.join(getwordlist(wordtograph))
-    return removedupes(words)
+    words = ', '.join(getwordlist(wordtograph)) 
+
+    return ', '.join(removedupes(words))
 
 
 # get a clean list of words 
@@ -68,7 +67,6 @@ def wordfilter(list2):
     for x in list2:
         if (containsObject(x, splitblacklist) == False) and (x[:4] != "http") and (x[:2] != "RT"):
             newlist = newlist + x
-            print x[:4]
         # if (adverb(list[x], ))
     return newlist   
 
@@ -81,21 +79,21 @@ def containsObject(obj, list):
 
 def removedupes(text):
     wordfrequency = getFrequency(text)
-    print wordfrequency
     keys = []
     for item in wordfrequency:
-        keys += item.key
-    
-    print keys
+        keys.append(item)
+    return keys
   
 
 def getFrequency(text):
-    freq = {};
     arraytext = text.split();
-    print arraytext
-    freq = Counter(arraytext)
-    print freq
-    return freq.keys
+    freq = Counter(arraytext)  #might not need to remove counter
+    return freq
+    # newfreq = {}
+    # for item in freq:
+    #     newfreq[item] = freq[item]
+    # return newfreq
+
 
 
 
