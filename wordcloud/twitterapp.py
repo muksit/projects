@@ -11,7 +11,7 @@ token_secret = "N8zPKf89ZhBLrAkRnlrCeza1NpnAFuvwuqRDMquD0Vo6C"
 
 api = TwitterAPI(key, secret, token, token_secret)
 
-r = api.request('search/tweets', {'q':'gaza', 'lang': 'en', 'count': 5})
+r = api.request('search/tweets', {'q':'gaza', 'lang': 'en', 'count': 100})
 # for item in r.get_iterator():
 textarray = []
 for item in r:
