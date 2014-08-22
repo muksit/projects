@@ -23,7 +23,10 @@ function filter(list){
       else{
         newlist.push(list[x])
       }
+      /*if (adverb(list[x], ))*/
     }
+
+
    return newlist   
 
 }
@@ -40,9 +43,9 @@ function containsObject(obj, list) {
 
 
 
-  d3.layout.cloud().size([2000, 2000])
+  d3.layout.cloud().size([1000, 1000])
       .words(filteredlist.map(function(d) {
-      return {text: d, size: 15 * (getFrequency(sampletext)[d])+5 };
+      return {text: d, size: 10 * (getFrequency(sampletext)[d])+5 };
       }))
       .rotate(function() { return ~~(Math.random() * 2) * 90; })
       .font("Impact")

@@ -1,42 +1,26 @@
-# -*- coding: utf-8 -*-
-"""
-Yelp API v2.0 code sample.
-
-This program demonstrates the capability of the Yelp API version 2.0
-by using the Search API to query for businesses by a search term and location,
-and the Business API to query additional information about the top result
-from the search query.
-
-Please refer to http://www.yelp.com/developers/documentation for the API documentation.
-
-This program requires the Python oauth2 library, which you can install via:
-`pip install -r requirements.txt`.
-
-Sample usage of the program:
-`python sample.py --term="bars" --location="San Francisco, CA"`
-"""
 import argparse
 import json
 import pprint
 import sys
 import urllib
 import urllib2
+import requests
 
 import oauth2
 
 
 API_HOST = 'api.yelp.com'
-DEFAULT_TERM = 'dinner'
-DEFAULT_LOCATION = 'Baltimore'
+DEFAULT_TERM = 'mexican'
+DEFAULT_LOCATION = 'San Francisco, CA'
 SEARCH_LIMIT = 5
-SEARCH_PATH = '/v2/search/'
+SEARCH_PATH = '/v2/search'
 BUSINESS_PATH = '/v2/business/'
 
 # OAuth credential placeholders that must be filled in by users.
 CONSUMER_KEY = "F4QWPoy-l84ECNiBoMsbZA"
 CONSUMER_SECRET = "XnG72viseHpylsl1lVBQ_rONUbg"
-TOKEN = "-MABW4NtXWUElpkO2m7mmX3KFlOne44O"
-TOKEN_SECRET = "Mfq3lkYl4p6KOslWMRxYZ1KxvoU"
+TOKEN = "A_6Yo2wXmhA9rR-VSRBQK6m-VIHwMqao"
+TOKEN_SECRET = "Jly_oqD8H_pC4OrMkrmgUi7hqZk"
 
 
 def request(host, path, url_params=None):
@@ -54,7 +38,7 @@ def request(host, path, url_params=None):
         urllib2.HTTPError: An error occurs from the HTTP request.
     """
     url_params = url_params or {}
-    encoded_params = urllib.urlencode(url_params)
+    encoded_params = urllib.urlencode(url_params) + signed_url #encoding the search parameters, (term, location)?
 
     url = 'http://{0}{1}?{2}'.format(host, path, encoded_params)
 
@@ -72,15 +56,27 @@ def request(host, path, url_params=None):
     oauth_request.sign_request(oauth2.SignatureMethod_HMAC_SHA1(), consumer, token)
     signed_url = oauth_request.to_url()
 
+    
+
+    # conn = urllib2.urlopen(signed_url, None)
+   
+    print signed_url
+
     print 'Querying {0} ...'.format(url)
+    req = requests.get(url=url)
+    print req 
+    print req.content
+    
+    
+    print req.json()
+    return req.json()
 
-    conn = urllib2.urlopen(signed_url, None)
-    try:
-        response = json.loads(conn.read())
-    finally:
-        conn.close()
+    # try:
+    #     response = json.loads(conn.read())
+    # finally:
+    #     conn.close()
 
-    return response
+    # return response
 
 def search(term, location):
     """Query the Search API by a search term and location.
@@ -148,6 +144,8 @@ def main():
     parser.add_argument('-l', '--location', dest='location', default=DEFAULT_LOCATION, type=str, help='Search location (default: %(default)s)')
 
     input_values = parser.parse_args()
+    print input_values.term 
+    print input_values.location
 
     try:
         search(input_values.term, input_values.location)

@@ -1,0 +1,4 @@
+from yelpapi import YelpAPI
+
+yelp_api = YelpAPI(key, secret, token, token_secret)
+search_results = yelp_api.search_query(term='Neptune Oyster', location='Boston, MA')
