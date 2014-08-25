@@ -5,36 +5,36 @@ var fill = d3.scale.category20c();
 
 var phrases = "very, so, not"
 
-request = $.get("/ask", {word: "josh"}, function(data){
-    var sampletext = data;
-
-    var splittext = sampletext.split(" ");
-
-    d3.layout.cloud().size([2000, 2000])
-        .words(splittext.map(function(d) {
-        return {text: d, size: 15 * (getFrequency(sampletext)[d])+5 };
+request = $.get("/ask", {word: }, function(data){
+    console.log(data)
+    console.log(Object.keys(data))
+    var sampletext = (Object.keys(data))
+    
+    d3.layout.cloud().size([1000, 800])
+        .words(sampletext.map(function(d) {
+        return {text: d.toUpperCase(), size: 5 * (data[d])+ 5 };
         }))
         .rotate(function() { return ~~(Math.random() * 2) * 90; })
         .font("Impact")
         .fontSize(function(d) { return d.size; })
         .on("end", draw)
         .start();
-
-    var wordfrequency = getFrequency(sampletext);
+/*
+    var wordfrequency = data
     var keys = [];
-    keys = Object.keys(wordfrequency);
+    keys = Object.keys(data);*/
 
     function draw(words) {
       d3.select("body").append("svg")
-          .attr("width", 2000)
-          .attr("height", 2000)
+          .attr("width", 1500)
+          .attr("height", 1500)
         .append("g")
           .attr("transform", "translate(850,650)")
         .selectAll("text")
           .data(words)
         .enter().append("text")
           .style("font-size", function(d) { return d.size + "px"; })
-          .style("font-family", "Impact")
+          .style("font-family", "Klavika")
           .style("fill", function(d, i) { return fill(i); })
           .attr("text-anchor", "middle")
           .attr("transform", function(d) {
@@ -45,60 +45,7 @@ request = $.get("/ask", {word: "josh"}, function(data){
 
 
   
-  });
-
-
-
-
-/*var filteredlist = filter(keys)
-
-
-function filter(list){
-  var newlist = [];
-  for (var x=0; x < list.length; x++) {
-      if (containsObject(list[x], splitblacklist) == true) {
-        newlist.pop(list[x])
-      }
-      else{
-        newlist.push(list[x])
-      }
-    }
-   return newlist }  */
-
-
-
-
-/*function containsObject(obj, list) {    
-    for ( var i = 0; i < list.length; i++) {
-        if (list[i] === obj) {
-            return true;
-        }
-    }
-    return false;
-}*/
-
-
-
-  function getFrequency(text) {
-    var freq = {};
-    var arraytext = text.split(" ");
-    for (var i=0; i < arraytext.length; i++) {
-      var word = arraytext[i];      
-        if (freq[word]) {
-          freq[word]++;
-        } 
-        else {
-           freq[word] = 1;
-        }
-    }
-
-    return freq;
-  };
-
-
-
-
-  
+  }, "json");
   
 
 });
