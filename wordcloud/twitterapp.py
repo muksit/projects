@@ -30,7 +30,6 @@ def input():
 #return list of words
 @app.route('/ask')
 def givecloud():
-
     wordtograph = request.args.get('word')
     print wordtograph
     words = getwordlist(wordtograph) 
@@ -69,8 +68,9 @@ def containsObject(wordtotest, blacklist):
 
 
 def getFrequency(text): 
-    freq = Counter(text)  
-    return freq
+    freq = Counter(text) 
+    
+    return dict(freq.most_common(100))
    
 
 
