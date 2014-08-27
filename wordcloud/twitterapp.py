@@ -1,6 +1,6 @@
 from TwitterAPI import TwitterAPI
 import nltk
-from collections import Counter
+from counter import Counter 
 import os, time, json, datetime 
 from json import JSONEncoder, load
 from flask import Flask, request, session, g, redirect, url_for, abort, \
