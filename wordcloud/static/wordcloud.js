@@ -2,7 +2,10 @@ $(document).ready(function(){
   $("#submitbutton").click(function(){
     $("svg").remove();
 
-    var fill = d3.scale.category20c();
+    var fill = d3.scale.ordinal()
+        .range(colorbrewer.RdGy[5]);
+
+
     var inputword = $('#word').val();
 
 
@@ -10,7 +13,7 @@ $(document).ready(function(){
 
         var sampletext = (Object.keys(data))
         
-        d3.layout.cloud().size([900, 900])
+        d3.layout.cloud().size([800, 800])
             .words(sampletext.map(function(d) {
                 return {text: d.toUpperCase(), size: 5 * (data[d])+ 5 };
                 }))
@@ -23,11 +26,10 @@ $(document).ready(function(){
 
         function draw(words) {
           d3.select("body").append("svg")
-        /* d3.select("svg")*/
-              .attr("width", 900)
-              .attr("height", 900)
+              .attr("width", 800)
+              .attr("height", 800)
             .append("g")
-              .attr("transform", "translate(450,450)")
+              .attr("transform", "translate(400,400)")
             .selectAll("text")
               .data(words)
             .enter().append("text")
