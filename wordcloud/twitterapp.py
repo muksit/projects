@@ -13,16 +13,6 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.config["DEBUG"] = True  # True only when testing
 
-# config = {"key":"", "secret":"", "token":"","token_secret":""}
-# execfile("config.conf", config)
-# key = config['key']
-# print key
-# secret = config['secret']
-# token = config['token']
-# token_secret = config['token_secret']
-# print token_secret
-
-
 
 api = TwitterAPI(appconfig.apikeys['key'], appconfig.apikeys['secret'], appconfig.apikeys['token'], appconfig.apikeys['token_secret'])
 
@@ -38,7 +28,6 @@ def input():
 @app.route('/ask')
 def givecloud():
     wordtograph = request.args.get('word')
-    print wordtograph
     words = getwordlist(wordtograph) 
     filteredwords = wordfilter(words)
     countedwords = getFrequency(filteredwords)
