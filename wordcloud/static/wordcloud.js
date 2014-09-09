@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $("#submitbutton").click(function(){
+  $("#target").submit(function(){
     $("svg").remove();
 
     var fill = d3.scale.ordinal()
@@ -52,7 +52,7 @@ $(document).ready(function(){
 
       
 
-
+    event.preventDefault();
 
 
 
